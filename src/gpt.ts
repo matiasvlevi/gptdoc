@@ -6,7 +6,10 @@ import parseEnv from './dotenv'
 
 export function initOpenAI() {
     return new OpenAIApi(new Configuration({
-        apiKey: parseEnv('.env').OPENAI_API_KEY
+        apiKey: 
+            process.env.OPENAI_API_KEY ||
+            parseEnv('.env').OPENAI_API_KEY 
+            
     }));;
 }
 

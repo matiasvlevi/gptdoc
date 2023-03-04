@@ -47,8 +47,7 @@ function Greet(name) {
 
 ## Config
 
-You can create a configuration file
-
+You can specify a configuration file:
 
 ```sh
 node node_modules/gptdoc -c .myconfig

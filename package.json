@@ -4,6 +4,7 @@
   "description": "Generate JSDOC comments with the help of OpenAI's models",
   "main": "./gptdoc.js",
   "scripts": {
+    "build": "node_modules/typescript/bin/tsc -p ./src",
     "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
   },
   "author": "Matias Vazquez-Levi",
