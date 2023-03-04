@@ -108,12 +108,21 @@ find your API key [here](https://platform.openai.com/account/api-keys)
 
 <br/><br/>
 
+
+
+
 # Document this project!
 
-Running `docself` will document source files in `./src/` of this repository
+Running `docself` in the cloned repo will document source files in `./src/`
 
 ```sh
 npm run docself
+```
+
+Running `test` in the cloned repo will document `./example/example.js`
+
+```sh
+npm run test
 ```
 
 <br/><br/>
