@@ -3,16 +3,14 @@ import { Config } from './config';
 
 import parseEnv from './dotenv'
 
-
+/** @gpt */
 export function initOpenAI() {
     return new OpenAIApi(new Configuration({
         apiKey: 
             process.env.OPENAI_API_KEY ||
             parseEnv('.env').OPENAI_API_KEY 
-            
     }));;
 }
-
 
 /**
  * ES6 arrow functions will cause problms

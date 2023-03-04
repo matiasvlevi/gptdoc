@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path"
+
 import { File } from './file'
 import { makeConfig, Config } from "./config";
 import { initOpenAI } from './gpt'
@@ -15,6 +16,7 @@ export class Project {
 
     config: Config;
 
+    /** @gpt */
     constructor(
         _config_path:string,
         _src_path:string,
@@ -66,12 +68,10 @@ export class Project {
 
     }
 
-
     /** @gpt */
     async loadOpenAI() {    
         this.openai = await initOpenAI();
     }
-
 
     /** @gpt */
     async generate() {

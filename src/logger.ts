@@ -1,5 +1,4 @@
-
-
+/** @gpt */
 export class Logger {
     static error(text: string) {
         process.stdout.write(

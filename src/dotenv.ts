@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import { Map } from './types';
 
+/** @gpt */
 export default function parseEnv(path: string) {
     const file = fs.readFileSync(path, 'utf-8');
     const lines = file.split('\n');

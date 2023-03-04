@@ -2,12 +2,13 @@
 
 Generate JSDOC comments with the help of OpenAI's models
 
-## Install
+
+## Install in project
 
 Install `gptdoc` as a dev dependency
 
 ```sh
-npm i gptdoc --save-dev 
+npm i --save-dev gptdoc 
 ```
 
 Execute 
@@ -44,6 +45,11 @@ function Greet(name) {
 
 <br/>
 
+## Simple use
+
+```
+
+```
 
 ## Config
 

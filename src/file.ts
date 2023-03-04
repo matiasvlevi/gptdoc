@@ -15,7 +15,6 @@ export class File {
 
     config: Config;
 
-
     /** @gpt */
     constructor(_config: Config, _source: string, isPath: boolean = true) {
         
@@ -32,7 +31,6 @@ export class File {
         } 
 
         this.source = fs.readFileSync(path.join(_config.files.src, _source), 'utf-8');
-
     }
 
     static HEADER = (config: Config) => {
@@ -56,16 +54,15 @@ export class File {
         this.doclets = Array.from(doclets).map((doclet: RegExpMatchArray) => {
             return new GPTDocument(doclet, this.config.tab_size);
         })
-
     }
 
     /** @gpt */
     async gptDescribe(openai: any) {
         for (let i = 0; i < this.doclets.length; i++) {
-            
             this.source = 
-                await this.doclets[i].gptDescribe(openai, this.source, this.config);
-
+                await this.doclets[i].gptDescribe(
+                    openai, this.source, this.config
+                );
         }
     }
 
