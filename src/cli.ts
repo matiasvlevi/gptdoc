@@ -1,10 +1,12 @@
 import { Map } from './types';
 
+/** @gpt */
 interface Option {
     argc: number;
     type: string;
 }
 
+/** @gpt */
 const CLIOptions: Map<Option> = {
     'config': {
         argc: 1,

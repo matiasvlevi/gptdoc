@@ -5,6 +5,7 @@
   "main": "./gptdoc.js",
   "scripts": {
     "build": "node_modules/typescript/bin/tsc -p ./src",
+    "docself": "node ./ -c .gptdoc ./src/ ./gpt-generated",
     "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
   },
   "author": "Matias Vazquez-Levi",

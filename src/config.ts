@@ -1,3 +1,5 @@
+
+/** @gpt */
 export interface IModelConfig {
     temperature: number;
     top_p: number;
@@ -5,11 +7,13 @@ export interface IModelConfig {
     model: string;
 }
 
+/** @gpt */
 export interface IFileConfig {
     src: string;
     dest: string;
 }
 
+/** @gpt */
 export interface Config {
     openai: IModelConfig;
     files: IFileConfig;
@@ -22,6 +26,7 @@ export interface Config {
     language: string;
 }
 
+/** @gpt */
 export function makeConfig(_config: any): Config {
     if (_config.openai === undefined) 
         _config.openai = {};
