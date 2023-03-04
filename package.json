@@ -1,15 +1,12 @@
 {
   "name": "gptdoc",
   "version": "1.0.0",
-  "description": "",
+  "description": "Generate JSDOC comments with the help of OpenAI's models",
   "main": "./gptdoc.js",
   "scripts": {
-    "doc": "node_modules/jsdoc/jsdoc.js -c .docrc ./example -r -d ./docs",
-    "build": "node_modules/typescript/bin/tsc -p ./src",
-    "start": "node ./gptdoc.js",
     "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
   },
-  "author": "",
+  "author": "Matias Vazquez-Levi",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.14.3",
@@ -17,5 +14,8 @@
   },
   "dependencies": {
     "openai": "^3.2.1"
+  },
+  "bin": {
+    "gptdoc": "./gptdoc.js"
   }
 }

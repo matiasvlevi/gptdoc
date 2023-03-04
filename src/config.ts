@@ -23,6 +23,12 @@ export interface Config {
 }
 
 export function makeConfig(_config: any): Config {
+    if (_config.openai === undefined) 
+        _config.openai = {};
+    
+    if (_config.files === undefined) 
+        _config.files = {};
+    
     return {
         DEBUG: _config.DEBUG || false,
         disableHeader: _config.disableHeader || false,

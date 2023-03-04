@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 const { Project } = require('./dist/index');
 const { parseArgs } = require('./dist/cli');
 
