@@ -1,0 +1,15 @@
+{
+    "DEBUG": false,
+    "framework": "JSDOC",
+    "language": "TS",
+    "files": {
+        "src": "./src",
+        "dest": "./gpt"
+    },
+    "openai": {
+        "temperature": 0.7,
+        "top_p": 1,
+        "max_tokens": 256,
+        "model": "text-davinci-003"
+    }
+}

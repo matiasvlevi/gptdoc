@@ -1,0 +1,21 @@
+{
+  "name": "gptdoc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./gptdoc.js",
+  "scripts": {
+    "doc": "node_modules/jsdoc/jsdoc.js -c .docrc ./example -r -d ./docs",
+    "build": "node_modules/typescript/bin/tsc -p ./src",
+    "start": "node ./gptdoc.js",
+    "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.14.3",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "openai": "^3.2.1"
+  }
+}
