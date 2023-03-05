@@ -55,7 +55,7 @@ Here is a sample configuration file
 
 ## Config Properties
 
-<table align="center">
+<table>
 
 <tr>
 <th align="center"> Property </th> 
@@ -79,7 +79,7 @@ Here is a sample configuration file
 
 #### File Config
 
-<table align="center">
+<table>
 
 <tr>
 <th align="center"> Property </th> 
@@ -110,7 +110,7 @@ Here is a sample configuration file
 
 #### OpenAI Config
 
-<table align="center">
+<table>
 
 <tr>
 <th align="center"> Property </th> 
