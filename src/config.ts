@@ -1,37 +1,114 @@
 import { CLIArgs } from "./cli";
 
-/** @gpt */
+
+/** 
+ * OpenAI model configuration
+ */
 export interface IModelConfig {
+    /**
+     * Attention to unexpected vocabulary, ranges from 0 to 2
+     */
     temperature: number;
+
+    /**
+     * Common token distribution, ranges from 0 to 1
+     */
     top_p: number;
+
+    /**
+     * The maximum number of tokens the model can respond
+     */
     max_tokens: number;
+
+    /**
+     * model name, refer to the OpenAI model documentation
+     * @see [OpenAI - Model Documentation](https://platform.openai.com/docs/models). 
+     * 
+     * Use text-davinci-003 if you don't know which model to use. 
+     */
     model: string;
 }
 
-/** @gpt */
+/** 
+ * File configuration definition
+ */
 export interface IFileConfig {
+    /**
+     * The source directory or file
+     */
     src: string;
+
+    /**
+     * The destination directory or file
+     */
     dest: string;
+
+    /**
+     * Search files recursively through the source directory
+     */
     recursive: boolean;
 }
 
-/** @gpt */
+/**
+ * Configuration definition
+ */
 export interface Config {
-    openai: IModelConfig;
-    files: IFileConfig;
-
-    tab_size: number;
+    /**
+     * Debug mode allows you to read & write files without prompting the OpenAI API.
+     * Placeholder doc comments are written instead.
+     */
     DEBUG: boolean;
-    disableHeader: boolean;
 
+    /**
+     * A value fed to the model to enforce a documentation framework. 
+     * ex: `JSDOC`, `typedoc`, `yui-doc`
+     */
     framework: string;
+
+    /**
+     * A value fed to the model to enforce a certain language
+     */
     language: string;
 
+    /**
+     * source code's tab size in spaces
+     * Default is 4
+     */
+    tab_size: number;
+
+    /**
+     * Additional prompt instructions sent to OpenAI
+     */
+    prompt: string;
+
+    /**
+     * whether or not to minify the code sent to OpenAI
+     */
     minify: boolean;
 
-    prompt: string;
+    /**
+     * Whether or not to disable the header message 
+     */
+    disableHeader: boolean;
+
+    /**
+     * OpenAI related configuration
+     */
+    openai: IModelConfig;
+
+    /**
+     * 	File configuration
+     */
+    files: IFileConfig;
 }
 
+/**
+ * Takes the first non-undefined value
+ * Used mostly for boolean values
+ * 
+ * @param arr Array of primitives
+ * @returns 
+ */
 function priorize(arr: any[]) {
     for (let i = 0; i < arr.length; i++) {
 
@@ -41,8 +118,16 @@ function priorize(arr: any[]) {
     return arr[arr.length-1];
 }
 
-/** @gpt */
-export function makeConfig(_config: any, cli_arg: CLIArgs = {options:{}}): Config {
+/** 
+ * Merge a configuration with the defaults
+ * 
+ * Defaults are defined here
+ */
+export function makeConfig(
+    _config: any,
+    cli_arg: CLIArgs = { options:{} }
+): Config {
+
     if (_config.openai === undefined) 
         _config.openai = {};
     
