@@ -112,7 +112,7 @@ find your API key [here](https://platform.openai.com/account/api-keys)
 
 
 
-# Document this project!
+### Document this project!
 
 Running `docself` in the cloned repo will document source files in `./src/`
 
