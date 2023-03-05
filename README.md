@@ -4,7 +4,7 @@
     
 </p>
 
-<p align="center">Generate JSDOC comments with the help of OpenAI's models</p>
+<p align="center">Generate JSDOC comments with OpenAI models</p>
 
 
 > Keep a Human in the loop, results might not be accurate
