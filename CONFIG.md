@@ -35,6 +35,7 @@ Here is a sample configuration file
     "framework": "JSDOC",
     "language": "TS",
     "tab_size": 4,
+    "disableHeader": false,
     "files": {
         "src": "./src",
         "dest": "./gpt",
