@@ -63,21 +63,26 @@ Here is a sample configuration file
 <th align="center"> description </th>
 </tr>
 
+See [config types](./src/config.ts)
+
 <tr><td>DEBUG</td><td>boolean</td><td>Debug mode allows you to read & write files without prompting the OpenAI API. Placeholder doc comments are written instead.</td></tr>
 <tr><td>framework</td><td>string</td><td>A value fed to the model to enforce a documentation framework. ex: `JSDOC`, `typedoc`, `yui-doc`</td></tr>
 <tr><td>language</td><td>string</td><td>A value fed to the model to enforce a certain language</td></tr>
 <tr><td>tab_size</td><td>number</td><td>source code's tab size in spaces</td></tr>
 <tr><td>prompt</td><td>string</td><td>Additional prompt instructions sent to OpenAI</td></tr>
 <tr><td>minify</td><td>boolean</td><td>whether or not to minify the code sent to OpenAI</td></tr>
+<tr><td>disableHeader</td><td>boolean</td><td>whether or not to disable the header at the top of generated files</td></tr>
 
-<tr><td>files</td><td>object</td><td>File configuration</td></tr>
-<tr><td>openai</td><td>object</td><td>OpenAI configuration</td></tr>
+<tr><td>files</td><td>IFileConfig</td><td>File configuration</td></tr>
+<tr><td>openai</td><td>IModelConfig</td><td>OpenAI configuration</td></tr>
 
 
 </table>
 <br/>
 
 #### File Config
+
+IFileConfig
 
 <table>
 
@@ -100,7 +105,7 @@ Here is a sample configuration file
 <tr>
     <td>recursive</td>
     <td>boolean</td>
-    <td>The source directory or file</td>
+    <td>Search files recursively through the source directory</td>
 </tr>
 
 </table>
@@ -109,6 +114,8 @@ Here is a sample configuration file
 
 
 #### OpenAI Config
+
+IModelConfig
 
 <table>
 
@@ -138,12 +145,14 @@ Here is a sample configuration file
     <td>string</td>
     <td>
         model name, refer to <a href="https://platform.openai.com/docs/models">OpenAI API Models Documentations</a>.
-        Use <code>text-davinci-003</code> if you don't know which model to use. 
+        Use <code>text-davinci-003</code> if you don't know which model to use.  Keep a Human in the loop, results might not be accurate
     </td>
 </tr>
 
 </table>
 
 <br/>
+
+
 
 
