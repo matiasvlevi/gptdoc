@@ -1,4 +1,5 @@
 src/
 example/
+docs/
 .env
 .gptdoc

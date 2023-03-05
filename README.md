@@ -1,6 +1,11 @@
-# gptdoc
 
-Generate JSDOC comments with the help of OpenAI's models
+<p align="center">
+    <img width="200" src="./docs/gptdoc.png"/>
+    
+</p>
+
+<p align="center">Generate JSDOC comments with the help of OpenAI's models</p>
+
 
 > Keep a Human in the loop, results might not be accurate
 
