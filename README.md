@@ -6,8 +6,11 @@
 
 <p align="center">Generate JSDOC comments with OpenAI models</p>
 
-
-> Keep a Human in the loop, results might not be accurate
+<p align="center">
+  <a href="https://github.com/matiasvlevi/gptdoc/#install-in-project">Install</a> •
+  <a href="https://github.com/matiasvlevi/gptdoc/blob/master/LICENSE">Documentation</a> •
+  <a href="https://github.com/matiasvlevi/gptdoc/blob/master/LICENSE">License</a>
+</p>
 
 <br/>
 
@@ -62,8 +65,6 @@ Execute
 node node_modules/gptdoc [args]
 ```
 
-
-
 <br/>
 
 ## Config
@@ -102,11 +103,7 @@ Find more info about the config [here](./CONFIG.md)
 
 ## API Key
 
-Add a `.env` file in your root directory
-
-```env
-OPENAI_API_KEY="sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-```
+Add a `.env` file in your root directory with `OPENAI_API_KEY`
 
 or set the `OPENAI_API_KEY` as a system environement variable.
 
@@ -118,6 +115,7 @@ find your API key [here](https://platform.openai.com/account/api-keys)
 
 
 ### Document this project!
+
 
 Running `docself` in the cloned repo will document source files in `./src/`
 
@@ -131,7 +129,9 @@ Running `test` in the cloned repo will document `./example/example.js`
 npm run test
 ```
 
-<br/><br/>
+
+
+<br/><br/><br/><br/>
 
 
 
