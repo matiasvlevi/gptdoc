@@ -1,6 +1,6 @@
 {
   "name": "gptdoc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate JSDOC comments with the help of OpenAI's models",
   "main": "./gptdoc.js",
   "scripts": {
