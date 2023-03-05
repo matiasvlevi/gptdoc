@@ -26,11 +26,15 @@ export interface Config {
 
     framework: string;
     language: string;
+
+    minify: boolean;
+
+    prompt: string;
 }
 
 function priorize(arr: any[]) {
     for (let i = 0; i < arr.length; i++) {
-        
+
         if (arr[i] !== undefined)
             return arr[i];
     }
@@ -51,6 +55,8 @@ export function makeConfig(_config: any, cli_arg: CLIArgs = {options:{}}): Confi
         tab_size: _config.tab_size || 4,
         framework: _config.framework || 'JSDOC',
         language: _config.language || 'JS',
+        prompt: _config.prompt || '',
+        minify: _config.minify || true,
         openai: {
             temperature: _config.openai.temperature || 0.75,
             top_p: _config.openai.top_p || 1,

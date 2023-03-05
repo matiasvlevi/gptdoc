@@ -14,6 +14,9 @@ export const ComponentKind = /(?<=\s*(\w*)\s)\w*(?=[\s*?]?[\{|\=|\(|\<])/gm;
  */
 export const GptPromptComment = /(\/\*\*[\*|\s|\w]*?@gpt[\S|\s]*?\*\/)\s([^>]*?.\s(\w*)\s*(\(|=|\{|\<))/gm;
 
+export const JSDOCComment = /\/\*\*[\*|\s|\w]*[\S|\s]*?\*\//gm
+
 export const HeaderMatch = /\/\*\*[\s|\*]+Do not modify this file ![\s|\*]*?[\s|\S]*\*\//gm
 
 export const ES6Function = /\w*\s*\=\s*\(.*\)\s*=>[\s\{\(]+.*[;|\S\n]/gm
+

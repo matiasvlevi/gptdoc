@@ -1,16 +1,19 @@
 import { 
     GptPromptComment,
-    ComponentKind
+    ComponentKind,
+    JSDOCComment
 } from './regex';
 
 import { 
     GPT_COMPLETION_CONFIG,
-    GPT_DEBUG_COMMENT
+    GPT_DEBUG_COMMENT,
+    GPT_PROMPT
 } from './gpt'
 
 import { Lexer } from './Lexer';
 import { Config } from './config';
 import { Logger } from './logger';
+import { Project } from './Project';
 
 
 /** @gpt */
@@ -55,37 +58,50 @@ export class GPTDocument {
     }
 
     /** @gpt */
-    async gptDescribe(openai: any, source: string, config: Config): Promise<string> {
-        if (config.DEBUG) {
+    async gptDescribe(openai: any, source: string, project: Project): Promise<string> {
+        let prompt: string = '';
+
+        if (project.config.DEBUG) {
             this.response.description = 
                 GPT_DEBUG_COMMENT(this.meta.kind, this.meta.name)
         } else {
             /**
              * Call to openAI's API
              */
+            prompt = GPT_PROMPT(project.config, this.meta.kind, this.source);
+
             const res = await openai.createCompletion(
-                GPT_COMPLETION_CONFIG(config, this.meta.kind, this.source)
+                GPT_COMPLETION_CONFIG(project.config, prompt)
             );
 
             this.response.description = 
                 res.data.choices[0].text || '';
 
-
             // Add a closing state to the comment 
             if (this.response.description.length !== 0)
                 this.response.description += '*/';
+
+            const doc_response = this.response.description.match(JSDOCComment);
+
+            if (doc_response === null) {
+                this.response.description = '/** \n * @gpt \n * GPT Did not generate a comment \n */'
+            } else {
+                this.response.description = doc_response[0];
+            }
 
             // Remove whitespace at the begining
             this.response.description =
                 this.response.description.trimStart();
 
 
-
         }
-        // Print
-        Logger.response(this.meta.kind, this.meta.name, this.response.description);
+        
+        Logger.response(this.meta.kind, this.meta.name, prompt, this.response.description);
+        
+        project.addTokens(this.response.description.length/4);
+        project.addTokens(prompt.length/4);
 
-        return this.writeGptDoclet(source, config);
+        return this.writeGptDoclet(source, project.config);
     }
 
     /** @gpt */

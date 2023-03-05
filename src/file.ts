@@ -5,6 +5,7 @@ import { GPTDocument } from './document';
 import { Config } from './config';
 
 import path from 'node:path'
+import { Project } from './Project';
 
 /** @gpt */
 export class File {
@@ -12,12 +13,12 @@ export class File {
     fullpath: string;
     doclets: GPTDocument[];
 
-    config: Config;
+    project: Project;
 
     /** @gpt */
-    constructor(_config: Config, _source: string, isPath: boolean = true) {
+    constructor(_project: Project, _source: string, isPath: boolean = true) {
         
-        this.config = _config;
+        this.project = _project;
 
         this.fullpath = _source;
 
@@ -50,7 +51,7 @@ export class File {
         const doclets = this.source.matchAll(GptPromptComment);
 
         this.doclets = Array.from(doclets).map((doclet: RegExpMatchArray) => {
-            return new GPTDocument(doclet, this.config.tab_size);
+            return new GPTDocument(doclet, this.project.config.tab_size);
         })
     }
 
@@ -59,7 +60,7 @@ export class File {
         for (let i = 0; i < this.doclets.length; i++) {
             this.source = 
                 await this.doclets[i].gptDescribe(
-                    openai, this.source, this.config
+                    openai, this.source, this.project
                 );
         }
     }
@@ -78,8 +79,8 @@ export class File {
     async writeFile(path: string) {
         const content = (
             this.source.match(HeaderMatch) === null &&
-            !this.config.disableHeader
-        ) ? File.HEADER(this.config) : '';
+            !this.project.config.disableHeader
+        ) ? File.HEADER(this.project.config) : '';
 
         await fs.promises.writeFile(
             path,

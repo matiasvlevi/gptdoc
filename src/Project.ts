@@ -17,6 +17,8 @@ export class Project {
 
     config: Config;
 
+    tokens: number;
+
     /** @gpt */
     constructor(
         _config_path:string,
@@ -24,6 +26,7 @@ export class Project {
     ) {
         this.openai;
         this.is_dir = true;
+        this.tokens = 0;
 
         if (fs.existsSync(_config_path)) {
             const data = JSON.parse(fs.readFileSync(_config_path, 'utf-8'));
@@ -99,6 +102,14 @@ export class Project {
         );
     }
 
+    addTokens(value: number) {
+        this.tokens += value;
+    }
+
+    getTokenCost() {
+        // TODO: Change price depending on model
+        return (this.tokens/1000) * 0.02; 
+    }
 
     /** @gpt */
     async generate() {
@@ -108,7 +119,7 @@ export class Project {
 
         for (let i = 0; i < this.files.length; i++) {
             let file = new File(
-                this.config,
+                this,
                 this.files[i]
             );
             file.parseDocuments();
@@ -122,5 +133,7 @@ export class Project {
             else
                 await file.writeFile(this.config.files.dest);    
         }
+
+        Logger.token(this.tokens);
     }
 }
