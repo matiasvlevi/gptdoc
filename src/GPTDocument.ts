@@ -12,9 +12,8 @@ import {
 
 import { Lexer } from './Lexer';
 import { Config } from './config';
-import { Logger } from './logger';
+import { Logger } from './Logger';
 import { Project } from './Project';
-
 
 /** @gpt */
 interface GPTResponse {
@@ -23,16 +22,54 @@ interface GPTResponse {
 
 /** @gpt */
 interface GPTMeta {
+    /**
+     * The type of the code segment
+     * 
+     * takes the word before the name
+     * ex: 
+     *      const 
+     *      class
+     *      function
+     *      async 
+     *      
+     * TODO: Should have a better mechanism for detecting types 
+     */
     kind: string;
+
+    /**
+     * The name of the code segment
+     */
     name: string;
+
+    /**
+     * The indent scope at this position in the source file
+     */
     indents: number;
 }
 
-/** @gpt */
+/**
+ * Represents one Doc comment, with response and meta data
+ */
 export class GPTDocument {
+
+    /**
+     * Response from the model
+     */
     response: GPTResponse;
+
+    /**
+     * Meta data for the code segment
+     */
     meta: GPTMeta;
+
+    /**
+     * The source code of the segment
+     */
     source: string;
+
+    /**
+     * The raw input comment 
+     */
     comment: string;
 
     /** @gpt */
@@ -65,11 +102,11 @@ export class GPTDocument {
             this.response.description = 
                 GPT_DEBUG_COMMENT(this.meta.kind, this.meta.name)
         } else {
-            /**
-             * Call to openAI's API
-             */
+
+            // Generate a prompt
             prompt = GPT_PROMPT(project.config, this.meta.kind, this.source);
 
+            // Call to openAI API
             const res = await openai.createCompletion(
                 GPT_COMPLETION_CONFIG(project.config, prompt)
             );
@@ -81,11 +118,15 @@ export class GPTDocument {
             if (this.response.description.length !== 0)
                 this.response.description += '*/';
 
-            const doc_response = this.response.description.match(JSDOCComment);
+            // Match a JSDOC comment in response as a safe guard
+            const doc_response = 
+                this.response.description.match(JSDOCComment);
 
             if (doc_response === null) {
+                // Fall back response
                 this.response.description = '/** \n * @gpt \n * GPT Did not generate a comment \n */'
             } else {
+                // Set matched comment as response
                 this.response.description = doc_response[0];
             }
 

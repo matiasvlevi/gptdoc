@@ -1,6 +1,5 @@
 import { CLIArgs } from "./cli";
 
-
 /** 
  * OpenAI model configuration
  */

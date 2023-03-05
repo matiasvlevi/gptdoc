@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import { GptPromptComment, HeaderMatch } from './regex';
 
-import { GPTDocument } from './document';
+import { GPTDocument } from './GPTDocument';
 import { Config } from './config';
 
 import path from 'node:path'

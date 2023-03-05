@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path"
 
-import { File } from './file'
+import { File } from './File'
 import { makeConfig, Config } from "./config";
 import { initOpenAI } from './gpt'
-import { Logger } from "./logger";
+import { Logger } from "./Logger";
 import { CLIArgs } from "./cli";
 
 /** @gpt */
