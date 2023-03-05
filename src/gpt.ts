@@ -4,7 +4,6 @@ import { Config } from './config';
 import { minify } from './minify';
 
 import parseEnv from './dotenv'
-import { Logger } from './logger';
 
 /** @gpt */
 export function initOpenAI() {
