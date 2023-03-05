@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://github.com/matiasvlevi/gptdoc/#install-in-project">Install</a> •
-  <a href="https://github.com/matiasvlevi/gptdoc/blob/master/LICENSE">Documentation</a> •
+  <a href="https://github.com/matiasvlevi/gptdoc/blob/master/CONFIG.md">Documentation</a> •
   <a href="https://github.com/matiasvlevi/gptdoc/blob/master/LICENSE">License</a>
 </p>
 
