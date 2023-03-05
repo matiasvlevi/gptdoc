@@ -71,14 +71,13 @@ node node_modules/gptdoc -c .myconfig
 
 If none provided, the script will look for `.gptdoc`
 
-Here is a sample configuration file
+### Sample Config file
 
 ```json
 {
     "DEBUG": false,
     "framework": "JSDOC",
-    "language": "TS",
-    "tab_size": 4,
+    "language": "JS",
     "files": {
         "src": "./src",
         "dest": "./gpt"
@@ -92,84 +91,7 @@ Here is a sample configuration file
 }
 ```
 
-<table align="center">
-
-<tr>
-<th align="center"> Property </th> 
-<th align="center"> type </th>
-<th align="center"> description </th>
-</tr>
-
-<tr><td>DEBUG</td><td>boolean</td><td>Debug mode allows you to read & write files without prompting the OpenAI API. Placeholder doc comments are written instead.</td></tr>
-<tr><td>framework</td><td>string</td><td>A value fed to the model to enforce a documentation framework. ex: `JSDOC`, `typedoc`, `yui-doc`</td></tr>
-<tr><td>language</td><td>string</td><td>A value fed to the model to enforce a certain language</td></tr>
-<tr><td>tab_size</td><td>number</td><td>source code's tab size in spaces</td></tr>
-<tr><td>prompt</td><td>string</td><td>Additional prompt instructions sent to OpenAI</td></tr>
-<tr><td>minify</td><td>boolean</td><td>whether or not to minify the code sent to OpenAI</td></tr>
-<tr><td>
-
-<table align="center">
-files
-<tr><td>src</td></tr>
-<tr><td>dest</td></tr>
-<tr><td>recursive</td></tr>
-</table>
-
-</td><td>
-
-<table align="center">
-<br/>
-<tr><td>string</td></tr>
-<tr><td>string</td></tr>
-<tr><td>boolean</td></tr>
-</table>
-
-
-</td>
-<td>
-
-<table align="center">
-<br/>
-<tr><td>The source directory or file</td></tr>
-<tr><td>The destination directory or file</td></tr>
-<tr><td>Search files recursively</td></tr>
-</table>
-
-
-</td>
-</tr>
-<tr><td>
-<table align="center">
-openai
-<tr><td>temperature</td></tr>
-<tr><td>top_p</td></tr>
-<tr><td>max_tokens</td></tr>
-<tr><td>model</td></tr>
-</table>
-
-</td><td>
-<table align="center">
-<br/>
-<tr><td>number</td></tr>
-<tr><td>number</td></tr>
-<tr><td>number</td></tr>
-<tr><td>string</td></tr>
-</table>
-
-</td><td>
-
-
-<table align="center">
-<br/>
-<tr><td>Attention to unexpected vocabulary, ranges from 0 to 2</td></tr>
-<tr><td>Common token distribution, ranges from 0 to 1</td></tr>
-<tr><td>The maximum number of tokens the model can respond</td></tr>
-<tr><td>model name, refer to <a href="https://platform.openai.com/docs/models">OpenAI API Models Documentations</a>. Use <code>text-davinci-003</code> if you don't know which model to use. 
-</td></tr>
-</table>
-
-</td></tr>
-</table>
+Find more info about the config [here](./CONFIG.md)
 
 <br/>
 
