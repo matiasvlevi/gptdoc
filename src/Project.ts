@@ -5,6 +5,7 @@ import { File } from './file'
 import { makeConfig, Config } from "./config";
 import { initOpenAI } from './gpt'
 import { Logger } from "./logger";
+import { CLIArgs } from "./cli";
 
 /** @gpt */
 export class Project {
@@ -19,8 +20,7 @@ export class Project {
     /** @gpt */
     constructor(
         _config_path:string,
-        _src_path:string,
-        _dest_path:string
+        cli_args: CLIArgs
     ) {
         this.openai;
         this.is_dir = true;
@@ -28,11 +28,7 @@ export class Project {
         if (fs.existsSync(_config_path)) {
             const data = JSON.parse(fs.readFileSync(_config_path, 'utf-8'));
             
-            // Overwrite source & dest path if cli args were specified 
-            if (_src_path !== undefined) data.files.src = _src_path;
-            if (_dest_path !== undefined) data.files.dest = _dest_path;
-            
-            this.config = makeConfig(data);
+            this.config = makeConfig(data, cli_args);
         } else {
             this.config = makeConfig({})
         }
@@ -58,9 +54,7 @@ export class Project {
             return;
         }
 
-        this.files = fs.readdirSync(this.config.files.src).filter(x => 
-            x.endsWith('.js') || x.endsWith('.ts')
-        );
+        this.files = Project.getSourceFilePaths(this.config.files.src, this.config.files.recursive);
         
         if (!fs.existsSync(this.config.files.dest)) {
             fs.mkdirSync(this.config.files.dest);
@@ -68,10 +62,43 @@ export class Project {
 
     }
 
+    static getSourceFilePaths(src_path: string, recursive: boolean = true): string[] {
+        const files = fs.readdirSync(src_path)
+                        .map(x => path.join(src_path, x)); // join with parent dir
+
+        const output: string[] = [];
+
+        for (let fullpath of files) {
+            if (fs.statSync(fullpath).isDirectory()) {
+                if (!recursive) continue;
+                // Is a directory
+                output.push(
+                    ...Project.getSourceFilePaths(fullpath)
+                )
+            } else if(
+                fullpath.endsWith('.js') || fullpath.endsWith('.ts')
+            ) {
+                // Is a source file
+                output.push(fullpath);
+            }
+        }
+
+        return output;
+    }
+
     /** @gpt */
     async loadOpenAI() {    
         this.openai = await initOpenAI();
     }
+
+
+    getDestPath(src_path: string): string {
+        return src_path.replace(
+            (this.config.files.src.match(/\w+/gm) || [''])[0],
+            (this.config.files.dest.match(/\w+/gm) || [''])[0]
+        );
+    }
+
 
     /** @gpt */
     async generate() {
@@ -84,13 +111,14 @@ export class Project {
                 this.config,
                 this.files[i]
             );
-
             file.parseDocuments();
             
             await file.gptDescribe(this.openai);
+            
+            const dest_file = this.getDestPath(this.files[i]);
 
             if (this.is_dir)
-                await file.writeDir();
+                await file.writeDir(dest_file);
             else
                 await file.writeFile(this.config.files.dest);    
         }

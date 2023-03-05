@@ -4,6 +4,20 @@ import { Map } from './types';
 interface Option {
     argc: number;
     type: string;
+    activelow?: boolean;
+}
+
+export interface Options {
+    config?: string[];
+    recursive?: boolean;
+    production?: boolean;
+}
+
+/** @gpt */
+export interface CLIArgs {
+    options: Options;
+    src?:  string;
+    dest?: string;
 }
 
 /** @gpt */
@@ -14,16 +28,18 @@ const CLIOptions: Map<Option> = {
     },
     'recursive':  {
         argc: 0,
-        type: 'flag'
+        type: 'flag',
+        activelow: false
     },
-    'data':  {
-        argc: 1,
-        type: 'string'
+    'production':  {
+        argc: 0,
+        type: 'flag',
+        activelow: true
     }
 }
 
 /** @gpt */
-export function parseArgs(args: string[]) {
+export function parseArgs(args: string[]): CLIArgs {
     const options: Map<any> = {
         config: [ ]
     };
@@ -40,7 +56,7 @@ export function parseArgs(args: string[]) {
                 args[a] === `--${option_name}` 
             ) {
                 if (CLIOptions[option_name].type === 'flag') {
-                    options[option_name] = true;
+                    options[option_name] = !(CLIOptions[option_name].activelow);
                     break;
                 }
 

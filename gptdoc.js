@@ -10,8 +10,7 @@ const { parseArgs } = require('./dist/cli');
 
     const proj = new Project(
         cli_arg.options.config[0],
-        cli_arg.src,
-        cli_arg.dest
+        cli_arg
     );
 
     if (!proj.config.DEBUG) {

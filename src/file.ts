@@ -9,8 +9,7 @@ import path from 'node:path'
 /** @gpt */
 export class File {
     source: string;
-    name: string;
-    path: string;
+    fullpath: string;
     doclets: GPTDocument[];
 
     config: Config;
@@ -20,8 +19,7 @@ export class File {
         
         this.config = _config;
 
-        this.name = _source;
-        this.path = _config.files.src;
+        this.fullpath = _source;
 
         this.doclets = [];
         
@@ -30,7 +28,7 @@ export class File {
             return;
         } 
 
-        this.source = fs.readFileSync(path.join(_config.files.src, _source), 'utf-8');
+        this.source = fs.readFileSync(_source, 'utf-8');
     }
 
     static HEADER = (config: Config) => {
@@ -67,14 +65,13 @@ export class File {
     }
 
     /** @gpt */
-    async writeDir() {
+    async writeDir(dest_path: string = this.fullpath) {
+        let dir = path.dirname(dest_path);
 
-        if (!fs.existsSync(this.config.files.dest)) 
-            fs.promises.mkdir(this.config.files.dest);
+        if (!fs.existsSync(dir)) 
+            await fs.promises.mkdir(dir);
 
-        return await this.writeFile(
-            path.join(this.config.files.dest, this.name)
-        );
+        return await this.writeFile(dest_path);
     }
 
     /** @gpt */

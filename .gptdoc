@@ -4,7 +4,8 @@
     "language": "TS",
     "files": {
         "src": "./src",
-        "dest": "./gpt"
+        "dest": "./gpt",
+        "recursive": true
     },
     "openai": {
         "temperature": 0.7,

@@ -1,3 +1,4 @@
+import { CLIArgs } from "./cli";
 
 /** @gpt */
 export interface IModelConfig {
@@ -11,6 +12,7 @@ export interface IModelConfig {
 export interface IFileConfig {
     src: string;
     dest: string;
+    recursive: boolean;
 }
 
 /** @gpt */
@@ -26,17 +28,26 @@ export interface Config {
     language: string;
 }
 
+function priorize(arr: any[]) {
+    for (let i = 0; i < arr.length; i++) {
+        
+        if (arr[i] !== undefined)
+            return arr[i];
+    }
+    return arr[arr.length-1];
+}
+
 /** @gpt */
-export function makeConfig(_config: any): Config {
+export function makeConfig(_config: any, cli_arg: CLIArgs = {options:{}}): Config {
     if (_config.openai === undefined) 
         _config.openai = {};
     
     if (_config.files === undefined) 
         _config.files = {};
-    
+
     return {
-        DEBUG: _config.DEBUG || false,
-        disableHeader: _config.disableHeader || false,
+        DEBUG: priorize([cli_arg.options.production,_config.DEBUG, false]),
+        disableHeader: priorize([_config.disableHeader, false]),
         tab_size: _config.tab_size || 4,
         framework: _config.framework || 'JSDOC',
         language: _config.language || 'JS',
@@ -47,8 +58,9 @@ export function makeConfig(_config: any): Config {
             model: _config.openai.model || 'text-davinci-003'
         },
         files: {
-            src: _config.files.src || './src',
-            dest: _config.files.dest || './generated-doc'
+            src: cli_arg.src || _config.files.src || './src',
+            dest: cli_arg.dest || _config.files.dest || './generated-doc',
+            recursive: priorize([cli_arg.options.recursive, _config.files.recursive, false])
         }
     }
 };
