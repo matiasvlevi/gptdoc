@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import { Map } from './types';
+import { Map } from '../types';
 
 /** @gpt */
 export default function parseEnv(path: string) {

@@ -9,6 +9,12 @@ function replaceAllMatches(value:string, reg:RegExp, desired:string) {
     return value;
   }
 
+
+/**
+ * TODO: Refactor
+ * I am sure there is a better way to do this
+ * 
+ */
 export function minify(src: string) {
     src = replaceAllMatches(src, /[\n\r\t\0]/g, '');
     src = replaceAllMatches(src, / =/g, '=');

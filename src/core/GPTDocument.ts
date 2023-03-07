@@ -8,11 +8,11 @@ import {
     GPT_COMPLETION_CONFIG,
     GPT_DEBUG_COMMENT,
     GPT_PROMPT
-} from './gpt'
+} from '../gpt'
 
 import { Lexer } from './Lexer';
-import { Config } from './config';
-import { Logger } from './Logger';
+import { Config } from '../config/types';
+import { Logger } from '../utils/Logger';
 import { Project } from './Project';
 
 /** @gpt */
