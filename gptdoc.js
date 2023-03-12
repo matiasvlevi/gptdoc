@@ -1,16 +1,14 @@
 #!/usr/bin/env node
-const { Project } = require('./dist/core');
-const { parseArgs } = require('./dist/cli');
-
+const { Core, Config } = require('./dist/index.js');
 /**
  * MAIN
  */
 (async () => {
-    const cli_arg = parseArgs([...process.argv.splice(2, process.argv.length)]);
-    
-    const proj = new Project(
-        Project.configFromCLI(cli_arg)
+    const config = Config.fromCLI(
+        Config.parseArgs([...process.argv.splice(2, process.argv.length)])
     );
+    
+    const proj = new Core.Project(config);
 
     await proj.generate();
 })();
