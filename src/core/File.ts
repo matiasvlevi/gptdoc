@@ -9,13 +9,33 @@ import { Project } from './Project';
 
 /** @gpt */
 export class File {
+    /**
+     * The text data from the File
+     */
     source: string;
+
+    /**
+     * The full path of the file
+     */
     fullpath: string;
+
+    /**
+     * All parsed GPTDocument comments
+     */
     doclets: GPTDocument[];
 
+    /**
+     * The parent's project instance
+     */
     project: Project;
 
-    /** @gpt */
+    /**
+     * Create a File instance
+     * 
+     * @param _project The project's instance
+     * @param _source The source text for the file 
+     * @param isPath Whether or not the file is constructed with a path, or with raw source code
+     */
     constructor(_project: Project, _source: string, isPath: boolean = true) {
         
         this.project = _project;
@@ -46,7 +66,9 @@ export class File {
         }\n */\n\n`;
     }
 
-    /** @gpt */
+    /** 
+     * Get all GPTDocuments within this file
+     */
     parseDocuments() {
         const doclets = this.source.matchAll(GptPromptComment);
 
@@ -55,17 +77,22 @@ export class File {
         })
     }
 
-    /** @gpt */
-    async gptDescribe(openai: any) {
+    /** 
+     * Create a request for all GPTDocuments in the file
+     * rewrite source value, as GPTDocuments get filled up
+     */
+    async gptDescribe() {
         for (let i = 0; i < this.doclets.length; i++) {
             this.source = 
                 await this.doclets[i].gptDescribe(
-                    openai, this.source, this.project
+                    this.source, this.project
                 );
         }
     }
 
-    /** @gpt */
+    /** 
+     * Write a file and add a directory if needed
+     */
     async writeDir(dest_path: string = this.fullpath) {
         let dir = path.dirname(dest_path);
 
@@ -75,7 +102,10 @@ export class File {
         return await this.writeFile(dest_path);
     }
 
-    /** @gpt */
+    /** 
+     * Write a single file, 
+     * include a header if needed & if specified
+     */
     async writeFile(path: string) {
         const content = (
             this.source.match(HeaderMatch) === null &&
