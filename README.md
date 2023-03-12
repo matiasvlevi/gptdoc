@@ -133,8 +133,12 @@ npm run test
 
 <br/><br/><br/><br/>
 
+## Contributing
+
+Constructive criticism, Issues and PRs are more than welcome!
 
 
+<br/><br/>
 
 ---
 
