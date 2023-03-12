@@ -1,5 +1,4 @@
 node_modules/
 dist/
 gpt/
-docs/typedoc/
 .env
