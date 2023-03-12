@@ -143,7 +143,7 @@ export function parseArgs(args: string[]): CLIArgs {
     // Add default config path if none found
     if (options.config.length === 0)
         options.config.push('.gptdoc');
-
+        
     return {
         options,
         src: args[0],

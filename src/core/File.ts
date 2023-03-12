@@ -28,7 +28,7 @@ export class File {
             this.source = _source;
             return;
         } 
-
+        
         this.source = fs.readFileSync(_source, 'utf-8');
     }
 
