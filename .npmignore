@@ -1,5 +1,9 @@
 src/
 example/
 docs/
+gpt/
+typedoc.js
+CONFIG.md
+.gitignore
 .env
 .gptdoc
