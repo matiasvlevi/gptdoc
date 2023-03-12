@@ -1,7 +1,7 @@
 
 # Configuration documentation
 
-Full Documentation [Here](./docs/typedoc/modules/index.html)
+Full Documentation [Here](https://rawcdn.githack.com/matiasvlevi/gptdoc/23e675393699c5af956038fae838d775e5b8febf/docs/typedoc/modules/index.html)
 
 ## API Key
 
