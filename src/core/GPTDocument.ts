@@ -4,10 +4,10 @@ import {
     JSDOCComment
 } from './regex';
 
-import { 
-    GPT_COMPLETION_CONFIG,
+import {
     GPT_DEBUG_COMMENT,
-    GPT_PROMPT
+    GPT_PROMPT,
+    OpenAICompletion
 } from '../gpt'
 
 import * as Lexer from './Lexer';
@@ -15,6 +15,7 @@ import * as Logger from '../utils/Logger';
 
 import { Config } from '../config/types';
 import { Project } from './Project';
+
 
 /** @gpt */
 interface GPTResponse {
@@ -73,7 +74,15 @@ export class GPTDocument {
      */
     comment: string;
 
-    /** @gpt */
+    /**
+     * Create a GPTDocument instance.
+     * This instance represents 1 documentation comment a GPT Model must fill up.
+     * 
+     * It holds meta data about the code component, and the response of the model once a request is sent.
+     * 
+     * @param match The match indicating this is a Documentation comment.
+     * @param tab_size The indentation level in which the code component is located.
+     */
     constructor(match: RegExpMatchArray, tab_size: number) {
 
         this.comment = match[1];
@@ -95,9 +104,27 @@ export class GPTDocument {
         };
     }
 
-    /** @gpt */
-    async gptDescribe(openai: any, source: string, project: Project): Promise<string> {
+    /**
+     * Get a conservative estimate of tokens count
+     * 
+     * @param text The input text
+     * @returns 
+     */
+    static estimateTokenCount(text: string): number {
+        return Math.ceil(text.length / 4);
+    }
+
+    /** 
+     * Get a description from the GPT Model for a certain function or component
+     * 
+     * @param source The source file text as a string
+     * @param project The project's instance
+     * 
+     * @returns The source file after this comment description is inserted
+     */
+    async gptDescribe(source: string, project: Project): Promise<string> {
         let prompt: string = '';
+        let prompt_tokens = 0, response_tokens = 0;
 
         if (project.config.DEBUG) {
             this.response.description = 
@@ -106,14 +133,30 @@ export class GPTDocument {
 
             // Generate a prompt
             prompt = GPT_PROMPT(project.config, this.meta.kind, this.source);
+            prompt_tokens = GPTDocument.estimateTokenCount(prompt);
+            
+            // Length guard, 
+            // do not send a request to OpenAI if prompt is too lengthy
+            if (prompt_tokens >= 4000) {
+                Logger.error(
+                    `Your prompt has ${prompt_tokens} tokens, maximum is 4000`, true
+                );
+                return source;
+            }
 
-            // Call to openAI API
-            const res = await openai.createCompletion(
-                GPT_COMPLETION_CONFIG(project.config, prompt)
-            );
+            const res = await OpenAICompletion(project.config, prompt);
+            if (res.error) {
+                Logger.error(res.error.message, true);
+                return source;
+            }
 
-            this.response.description = 
-                res.data.choices[0].text || '';
+            // Set description
+            this.response.description = res.choices[0].text || '';
+
+            // More accurate values for token counts
+            prompt_tokens = res.usage.prompt_tokens;
+            if (res.usage.completion_tokens) 
+                response_tokens = res.usage.completion_tokens;
 
             // Add a closing state to the comment 
             if (this.response.description.length !== 0)
@@ -135,18 +178,28 @@ export class GPTDocument {
             this.response.description =
                 this.response.description.trimStart();
 
-
         }
-        
-        Logger.response(this.meta.kind, this.meta.name, prompt, this.response.description);
-        
-        project.addTokens(this.response.description.length/4);
-        project.addTokens(prompt.length/4);
+
+        // Log
+        if (project.config.log) {
+            Logger.title(this.meta.kind, this.meta.name);
+            Logger.response(prompt_tokens, response_tokens, project.getTokenCost());
+            Logger.content(this.response.description);
+        }
+
+        project.addTokens(prompt_tokens + response_tokens)
 
         return this.writeGptDoclet(source, project.config);
     }
 
-    /** @gpt */
+    /** 
+     * Write the GPT Model's response in a given string buffer.
+     * 
+     * @param source The string buffer
+     * @param config The project's configuration
+     * 
+     * @returns The new string with the GPT response
+     */
     writeGptDoclet(source: string, config: Config): string {
         const matches = source.matchAll(GptPromptComment);
         let parsed: Array<string> = [];
