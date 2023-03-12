@@ -1,12 +1,16 @@
 import fs from 'node:fs'
-import { Map } from '../types';
 
-/** @gpt */
-export default function parseEnv(path: string) {
+/**
+ * Parse a .env file
+ * 
+ * @param path The .env file path
+ * @returns 
+ */
+export default function parseEnv(path: string): { [key:string]: any } {
     const file = fs.readFileSync(path, 'utf-8');
     const lines = file.split('\n');
 
-    const config: Map<any> = {};
+    const config: { [key:string]: any } = {};
 
     lines.forEach(line => {
         if (!line.includes('=')) return;

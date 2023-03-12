@@ -1,4 +1,3 @@
-import { Map } from './types';
 
 /** 
  * Configuration coming from the CLI arguments
@@ -68,7 +67,7 @@ interface Flag {
 /**
  * The defined flag options
  */
-const CLIOptions: Map<Flag> = {
+const CLIOptions: { [key:string]: Flag } = {
     'config': {
         argc: 1,
         type: 'string'
@@ -97,7 +96,7 @@ const CLIOptions: Map<Flag> = {
  * @returns parsed output
  */
 export function parseArgs(args: string[]): CLIArgs {
-    const options: Map<any> = { config: [] };
+    const options: { [key:string]: any } = { config: [] };
 
     // Iterate through arguments
     for (let a = 0; a < args.length; a++) {
