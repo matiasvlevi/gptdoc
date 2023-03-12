@@ -1,7 +1,7 @@
 
 # Configuration documentation
 
-
+Full Documentation [Here](./docs/typedoc/modules/index.html)
 
 ## API Key
 
@@ -73,6 +73,7 @@ See [config types](./src/config.ts)
 <tr><td>prompt</td><td>string</td><td>Additional prompt instructions sent to OpenAI</td></tr>
 <tr><td>minify</td><td>boolean</td><td>whether or not to minify the code sent to OpenAI</td></tr>
 <tr><td>disableHeader</td><td>boolean</td><td>whether or not to disable the header at the top of generated files</td></tr>
+<tr><td>log</td><td>boolean</td><td>verbose output in the console</td></tr>
 
 <tr><td>files</td><td>IFileConfig</td><td>File configuration</td></tr>
 <tr><td>openai</td><td>IModelConfig</td><td>OpenAI configuration</td></tr>
