@@ -10,9 +10,10 @@ import {
     GPT_PROMPT
 } from '../gpt'
 
-import { Lexer } from './Lexer';
+import * as Lexer from './Lexer';
+import * as Logger from '../utils/Logger';
+
 import { Config } from '../config/types';
-import { Logger } from '../utils/Logger';
 import { Project } from './Project';
 
 /** @gpt */
