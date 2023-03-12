@@ -1,13 +1,11 @@
 import fs from "node:fs";
 import path from "node:path"
 
-import { Configuration, OpenAIApi } from 'openai';
-
 import { File } from './File'
 import { makeConfig, Config } from "../config/index";
 
 import * as Logger from "../utils/Logger";
-import { CLIArgs } from "../cli";
+import { Pricing } from "../gpt";
 
 /** @gpt */
 export class Project {
@@ -23,11 +21,6 @@ export class Project {
     is_dir: boolean;
 
     /**
-     * The OpenAI API
-     */
-    openai: any;
-
-    /**
      * The configuration, a blend of the cli arguments & config file. 
      */
     config: Config;
@@ -41,13 +34,9 @@ export class Project {
     constructor(
         config: Config
     ) {
-        this.openai;
         this.is_dir = true;
         this.tokens = 0;
         this.config = config;
-
-        // Register to the OpenAI API
-        this.loadOpenAI(config.apiKey);
 
         // Abort process if source is not valid
         if (!fs.existsSync(this.config.files.src)) {
@@ -82,17 +71,6 @@ export class Project {
 
     }
 
-    static configFromCLI(cli_args: CLIArgs): Config {
-        let config_path = (cli_args.options.config || [''])[0];
-
-        if (!fs.existsSync(config_path)) return makeConfig({});
-
-        return makeConfig(
-            JSON.parse(fs.readFileSync(config_path, 'utf-8')),
-            cli_args
-        );
-    }
-
     static readConfigFile(config_path: string): Config {
         if (!fs.existsSync(config_path)) return makeConfig({});
 
@@ -125,14 +103,6 @@ export class Project {
         return output;
     }
 
-    /** @gpt */
-    loadOpenAI(apiKey: string) {    
-        if (this.config.DEBUG) return;
-        
-        this.openai = new OpenAIApi(new Configuration({ apiKey }));
-    }
-
-
     getDestPath(src_path: string): string {
         return src_path.replace(
             (this.config.files.src.match(/\w+/gm) || [''])[0],
@@ -145,17 +115,24 @@ export class Project {
     }
 
     getTokenCost() {
+        let price = 0;
+
+        for (let model in Pricing) {
+            if (this.config.openai.model.includes(model)) {
+                price = Pricing[model];
+                break;
+            }
+        }
+
         // TODO: Change price depending on model
-        return (this.tokens/1000) * 0.02; 
+        return price; 
     }
 
     /** @gpt */
     async generate() {
-        if (!this.config.DEBUG && this.openai === undefined) {
-            return;
-        };
 
-        Logger.log(`Waiting for OpenAI repsonses...`);
+        if (this.config.log) 
+            Logger.log(`Waiting for OpenAI repsonses...`);
 
         for (let i = 0; i < this.files.length; i++) {
             if (this.files[i].length <= 0) continue;
@@ -166,7 +143,7 @@ export class Project {
             );
             file.parseDocuments();
             
-            await file.gptDescribe(this.openai);
+            await file.gptDescribe();
             
             const dest_file = this.getDestPath(this.files[i]);
 
@@ -176,6 +153,7 @@ export class Project {
                 await file.writeFile(this.config.files.dest);    
         }
 
-        Logger.token(this.tokens);
+        if (this.config.log) 
+            Logger.token(this.tokens, this.getTokenCost());
     }
 }
