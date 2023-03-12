@@ -6,7 +6,7 @@ import fs from 'node:fs'
  * @param path The .env file path
  * @returns 
  */
-export default function parseEnv(path: string): { [key:string]: any } {
+export function parseEnv(path: string): { [key:string]: any } {
     const file = fs.readFileSync(path, 'utf-8');
     const lines = file.split('\n');
 
