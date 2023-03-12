@@ -1,2 +1,5 @@
 export { Config, IFileConfig, IModelConfig } from './types'
 export { makeConfig } from './makeConfig'
+export { parseEnv } from './parseEnv'
+export { parseArgs } from './parseArgs'
+export { fromCLI } from './fromCLI'
