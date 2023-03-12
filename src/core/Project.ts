@@ -6,7 +6,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import { File } from './File'
 import { makeConfig, Config } from "../config/index";
 
-import { Logger } from "../utils/Logger";
+import * as Logger from "../utils/Logger";
 import { CLIArgs } from "../cli";
 
 /** @gpt */
