@@ -12,13 +12,29 @@ import { CLIArgs } from "../cli";
 /** @gpt */
 export class Project {
 
+    /**
+     * An array holding all the relevant file paths
+     */
     files: string[];
+    
+    /**
+     * Wheter or not source is a directory
+     */
     is_dir: boolean;
 
+    /**
+     * The OpenAI API
+     */
     openai: any;
 
+    /**
+     * The configuration, a blend of the cli arguments & config file. 
+     */
     config: Config;
 
+    /**
+     * Token count for price estimation
+     */
     tokens: number;
 
     /** @gpt */
@@ -30,16 +46,18 @@ export class Project {
         this.tokens = 0;
         this.config = config;
 
+        // Register to the OpenAI API
         this.loadOpenAI(config.apiKey);
 
-
+        // Abort process if source is not valid
         if (!fs.existsSync(this.config.files.src)) {
             console.error(`${this.config.files.src} is not a valid source file or directory`);
             process.exit();
         }
 
+        // If src is a file
         if (!fs.statSync(this.config.files.src).isDirectory()) {
-            this.files = [''];
+            this.files = [this.config.files.src];
             this.is_dir = false;
 
             if (this.config.files.dest === './gpt') {
@@ -50,8 +68,14 @@ export class Project {
             return;
         }
 
-        this.files = Project.getSourceFilePaths(this.config.files.src, this.config.files.recursive);
+        // If src is directory
+        this.files = 
+            Project.getSourceFilePaths(
+                this.config.files.src,
+                this.config.files.recursive
+            );
         
+        // Make destination directory is does not exist
         if (!fs.existsSync(this.config.files.dest)) {
             fs.mkdirSync(this.config.files.dest);
         }
@@ -134,6 +158,8 @@ export class Project {
         Logger.log(`Waiting for OpenAI repsonses...`);
 
         for (let i = 0; i < this.files.length; i++) {
+            if (this.files[i].length <= 0) continue;
+
             let file = new File(
                 this,
                 this.files[i]
