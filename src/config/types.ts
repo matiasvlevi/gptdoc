@@ -101,7 +101,12 @@ export interface Config {
     files: IFileConfig;
 
     /**
+     * Whether or not to display the output in the console
+     */
+    log: boolean;
+
+    /**
      * OpenAI API key, read from a .env file
      */
-    apiKey:string;
+    apiKey?:string;
 }

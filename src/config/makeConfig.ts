@@ -1,6 +1,6 @@
 import { Config } from './types'
 import { CLIArgs } from "../cli";
-import parseEnv from '../utils/dotenv';
+import { parseEnv } from './parseEnv';
 
 /** 
  * Merge a configuration with the defaults
@@ -37,6 +37,7 @@ export function makeConfig(
             dest: cli_arg.dest || _config.files.dest || './generated-doc',
             recursive: cli_arg.options.recursive ?? _config.files.recursive ?? false
         },
+        log: _config.log ?? true,
         apiKey: process.env.OPENAI_API_KEY || parseEnv('.env').OPENAI_API_KEY || ''
     }
 };
