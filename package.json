@@ -1,6 +1,6 @@
 {
   "name": "gptdoc",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "author": "Matias Vazquez-Levi",
   "description": "Generate JSDOC comments with the help of OpenAI's models",
