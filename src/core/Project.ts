@@ -115,16 +115,15 @@ export class Project {
     }
 
     getTokenCost() {
-        let price = 0;
+        let price = 0.02;
 
         for (let model in Pricing) {
             if (this.config.openai.model.includes(model)) {
-                price = Pricing[model];
+                price = Pricing[model].price;
                 break;
             }
         }
 
-        // TODO: Change price depending on model
         return price; 
     }
 

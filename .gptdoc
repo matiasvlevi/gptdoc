@@ -7,11 +7,12 @@
         "dest": "./gpt",
         "recursive": true
     },
+    "chat": "true",
     "openai": {
         "temperature": 1.3,
         "top_p": 0.5,
         "max_tokens": 256,
-        "model": "text-davinci-003"
+        "model": "gpt-3.5-turbo"
     },
     "prompt": "Add @desc and @summary tags as you see fit"
 }
