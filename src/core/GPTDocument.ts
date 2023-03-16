@@ -151,8 +151,6 @@ export class GPTDocument {
             else
                 res = await OpenAICompletion(project.config, prompt);
 
-            console.log(res)
-
             if (res.error) {
                 Logger.error(res.error.message, true);
                 return source;

@@ -145,5 +145,9 @@ export const Models: { [key:string]: ModelMeta } = {
     'gpt-3.5-turbo': {
         price: 0.002,
         isChatModel: true
+    },
+    'gpt-4': {
+        price: 0.12,
+        isChatModel: true
     }
 }

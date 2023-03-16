@@ -7,12 +7,11 @@
         "dest": "./gpt",
         "recursive": true
     },
-    "chat": "true",
     "openai": {
         "temperature": 1.3,
         "top_p": 0.5,
         "max_tokens": 256,
-        "model": "gpt-3.5-turbo"
+        "model": "gpt-4"
     },
-    "prompt": "Add @desc and @summary tags as you see fit"
+    "prompt": "Add @desc and @summary tags as you see fit. Use typedoc documentation syntax"
 }

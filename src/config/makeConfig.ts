@@ -1,6 +1,7 @@
 import { Config } from './types'
 import { CLIArgs } from "../cli";
 import { parseEnv } from './parseEnv';
+import { Models } from '../gpt';
 
 /** 
  * Merge a configuration with the defaults
@@ -26,7 +27,7 @@ export function makeConfig(
         language: _config.language || 'JS',
         prompt: _config.prompt || '',
         minify: _config.minify ?? true,
-        chat: _config.chat ?? false,
+        chat: Models[_config.openai.model].isChatModel ?? _config.chat ?? false,
         openai: {
             temperature: _config.openai.temperature || 0.75,
             top_p: _config.openai.top_p || 1,

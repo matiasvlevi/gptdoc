@@ -5,7 +5,7 @@ import { File } from './File'
 import { makeConfig, Config } from "../config/index";
 
 import * as Logger from "../utils/Logger";
-import { Pricing } from "../gpt";
+import { Models } from "../gpt";
 
 /** @gpt */
 export class Project {
@@ -117,9 +117,9 @@ export class Project {
     getTokenCost() {
         let price = 0.02;
 
-        for (let model in Pricing) {
+        for (let model in Models) {
             if (this.config.openai.model.includes(model)) {
-                price = Pricing[model].price;
+                price = Models[model].price;
                 break;
             }
         }
