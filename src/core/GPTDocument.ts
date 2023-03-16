@@ -196,7 +196,8 @@ export class GPTDocument {
             Logger.content(this.response.description);
         }
 
-        project.addTokens(prompt_tokens + response_tokens)
+        project.addPromptTokens(prompt_tokens);
+        project.addResponseTokens(response_tokens);
 
         return this.writeGptDoclet(source, project.config);
     }
