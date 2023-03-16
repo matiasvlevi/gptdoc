@@ -106,6 +106,11 @@ export interface Config {
     log: boolean;
 
     /**
+     * Whether or not model is a chat model
+     */
+    chat: boolean;
+
+    /**
      * OpenAI API key, read from a .env file
      */
     apiKey?:string;

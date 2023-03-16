@@ -7,6 +7,7 @@ import {
 import {
     GPT_DEBUG_COMMENT,
     GPT_PROMPT,
+    OpenAIChatCompletion,
     OpenAICompletion
 } from '../gpt'
 
@@ -144,23 +145,31 @@ export class GPTDocument {
                 return source;
             }
 
-            const res = await OpenAICompletion(project.config, prompt);
+            let res;
+            if (project.config.chat)
+                res = await OpenAIChatCompletion(project.config, prompt);
+            else
+                res = await OpenAICompletion(project.config, prompt);
+
             if (res.error) {
                 Logger.error(res.error.message, true);
                 return source;
             }
-
-            // Set description
-            this.response.description = res.choices[0].text || '';
 
             // More accurate values for token counts
             prompt_tokens = res.usage.prompt_tokens;
             if (res.usage.completion_tokens) 
                 response_tokens = res.usage.completion_tokens;
 
-            // Add a closing state to the comment 
+            if (res.object === 'chat.completion') {
+                this.response.description = res.choices[0].message.content || '';
+            } else {
+                this.response.description = res.choices[0].text || '';
+            }
+
+                    // Add a closing state to the comment 
             if (this.response.description.length !== 0)
-                this.response.description += '*/';
+            this.response.description += '*/';
 
             // Match a JSDOC comment in response as a safe guard
             const doc_response = 
