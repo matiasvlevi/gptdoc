@@ -147,7 +147,7 @@ IModelConfig
     <td>string</td>
     <td>
         model name, refer to <a href="https://platform.openai.com/docs/models">OpenAI API Models Documentations</a>.
-        Use <code>text-davinci-003</code> if you don't know which model to use.  Keep a Human in the loop, results might not be accurate
+        Use <code>text-davinci-003</code> if you don't know which model to use. <code>gpt-4</code> is the best model for this case, but it costs a lot more. Keep a Human in the loop, results might not be accurate
     </td>
 </tr>
 
