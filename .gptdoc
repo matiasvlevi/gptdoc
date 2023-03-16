@@ -13,5 +13,5 @@
         "max_tokens": 256,
         "model": "gpt-4"
     },
-    "prompt": "Add @desc and @summary tags as you see fit. Use typedoc documentation syntax"
+    "prompt": "Add @desc and @summary tags as you see fit."
 }
