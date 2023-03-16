@@ -113,8 +113,13 @@ export async function OpenAICompletion(_config: Config, prompt: string ) {
     return await res.json();
 }
 
+export interface PriceRange {
+    prompt: number;
+    response: number
+}
+
 interface ModelMeta {
-    price: number;
+    price: number | PriceRange;
     isChatModel: boolean;
 }
 
@@ -147,7 +152,31 @@ export const Models: { [key:string]: ModelMeta } = {
         isChatModel: true
     },
     'gpt-4': {
-        price: 0.12,
+        price: {
+            prompt: 0.03,
+            response: 0.06
+        },
+        isChatModel: true
+    },
+    'gpt-4-0314': {
+        price: {
+            prompt: 0.03,
+            response: 0.06
+        },
+        isChatModel: true
+    },
+    'gpt-4-32k': {
+        price: {
+            prompt: 0.06,
+            response: 0.12
+        },
+        isChatModel: true
+    },
+    'gpt-4-32k-0314': {
+        price: {
+            prompt: 0.06,
+            response: 0.12
+        },
         isChatModel: true
     }
 }

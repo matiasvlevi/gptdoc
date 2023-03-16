@@ -1,3 +1,5 @@
+import { PriceRange } from "../gpt";
+
 /** @gpt */
 export function error(text: string, exit: boolean = false) {
     process.stdout.write(
@@ -19,12 +21,21 @@ export function title(kind: string, name: string) {
 }
 
 /** @gpt */
-export function response(prompt_tokens: number, response_tokens:number, price: number) {
+export function response(prompt_tokens: number, response_tokens:number, price: number | PriceRange) {
+
+    if (typeof price == 'number') {
+        price = {
+            prompt: price,
+            response: price
+        }
+    }
+
     process.stdout.write(
         `Prompt tokens:   ~\x1b[92m${prompt_tokens}\x1b[0m\n`+
         `Response tokens: ~\x1b[92m${response_tokens}\x1b[0m\n`
     );
-    token(prompt_tokens + response_tokens, price);
+
+    token(prompt_tokens, response_tokens, price);
 }
 
 export function content(text:string) {
@@ -35,9 +46,27 @@ export function content(text:string) {
 }
 
 /** @gpt */
-export function token(total_tokens: number, price: number, title:string = 'Total') {
+export function token(
+    prompt_tokens: number,
+    response_tokens: number,
+    price: number | PriceRange,
+    title:string = 'Total'
+) {
+
+    if (typeof price == 'number') {
+        price = {
+            prompt: price,
+            response: price
+        }
+    }
+
     process.stdout.write(
-        `${title} tokens:    ~\x1b[92m${total_tokens}\x1b[0m\n`+
-        `Price:           ~\x1b[92m${Math.round((total_tokens/1000) * price * 100000)/100000}$USD\x1b[0m\n`
+        `${title} tokens:    ~\x1b[92m${prompt_tokens + response_tokens}\x1b[0m\n`+
+        `Price:           ~\x1b[92m${
+            Math.round((
+                (prompt_tokens/1000) * price.prompt +
+                (response_tokens/1000) * price.response
+            )*100000)/100000
+        }$USD\x1b[0m\n`
     );
 }

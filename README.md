@@ -4,7 +4,7 @@
     
 </p>
 
-<p align="center">Generate JSDOC comments with OpenAI models</p>
+<p align="center">Generate documentation comments with OpenAI models</p>
 
 <p align="center">
   <a href="https://github.com/matiasvlevi/gptdoc/#install-in-project">Install</a> •

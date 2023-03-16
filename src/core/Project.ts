@@ -5,7 +5,7 @@ import { File } from './File'
 import { makeConfig, Config } from "../config/index";
 
 import * as Logger from "../utils/Logger";
-import { Models } from "../gpt";
+import { Models, PriceRange } from "../gpt";
 
 /** @gpt */
 export class Project {
@@ -26,16 +26,24 @@ export class Project {
     config: Config;
 
     /**
-     * Token count for price estimation
+     * Prompt token count for price estimation
      */
-    tokens: number;
+    prompt_tokens: number;
+
+    /**
+     * Responses token count for price estimation
+     */
+    response_tokens: number;
 
     /** @gpt */
     constructor(
         config: Config
     ) {
         this.is_dir = true;
-        this.tokens = 0;
+
+        this.prompt_tokens = 0;
+        this.response_tokens = 0;
+        
         this.config = config;
 
         // Abort process if source is not valid
@@ -110,12 +118,17 @@ export class Project {
         );
     }
 
-    addTokens(value: number) {
-        this.tokens += value;
+    addPromptTokens(value: number) {
+        this.prompt_tokens += value;
     }
 
-    getTokenCost() {
-        let price = 0.02;
+
+    addResponseTokens(value: number) {
+        this.response_tokens += value;
+    }
+
+    getTokenCost(): number | PriceRange {
+        let price: number | PriceRange = 0.02;
 
         for (let model in Models) {
             if (this.config.openai.model.includes(model)) {
@@ -153,6 +166,6 @@ export class Project {
         }
 
         if (this.config.log) 
-            Logger.token(this.tokens, this.getTokenCost());
+            Logger.token(this.prompt_tokens, this.response_tokens, this.getTokenCost());
     }
 }
