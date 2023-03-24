@@ -1,4 +1,3 @@
-
 # Configuration documentation
 
 Full Documentation [Here](https://rawcdn.githack.com/matiasvlevi/gptdoc/23e675393699c5af956038fae838d775e5b8febf/docs/typedoc/modules/index.html)
@@ -14,7 +13,7 @@ OPENAI_API_KEY="sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 or set the OPENAI_API_KEY as a system environement variable. \
 Find your api key [here](https://platform.openai.com/account/api-keys)
 
-## Config file 
+## Config file
 
 You can specify a configuration file:
 
@@ -66,7 +65,7 @@ See [config types](./src/config.ts)
 | files          | IFileConfig | File configuration                                                                   |
 | openai         | IModelConfig | OpenAI configuration                                                                |
 
-#### File Config
+### File Config
 
 IFileConfig
 
@@ -76,7 +75,7 @@ IFileConfig
 | dest       | string  | The destination directory or file        |
 | recursive  | boolean | Search files recursively through the source directory |
 
-#### OpenAI Config
+### OpenAI Config
 
 IModelConfig
 
@@ -86,7 +85,3 @@ IModelConfig
 | top_p       | number  | Common token distribution, ranges from 0 to 1                                                                                                                      |
 | max_tokens  | number  | The maximum number of tokens the model can respond                                                                                                                 |
 | model       | string  | model name, refer to [OpenAI API Models Documentations](https://platform.openai.com/docs/models). Use `text-davinci-003` if you don't know which model to use. `gpt-4` is the best model for this case, but it costs a lot more. Keep a Human in the loop, results might not be accurate |
-
-
-
-
