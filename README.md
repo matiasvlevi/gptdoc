@@ -1,7 +1,5 @@
-
 <p align="center">
-    <img width="200" src="./docs/gptdoc.png"/>
-    
+    <img width="200" src="./docs/gptdoc.png" alt="GPTDoc logo">
 </p>
 
 <p align="center">Generate documentation comments with OpenAI models</p>
@@ -12,7 +10,6 @@
   <a href="https://github.com/matiasvlevi/gptdoc/blob/master/LICENSE">License</a>
 </p>
 
-<br/>
 
 ## Preview
 
@@ -59,13 +56,11 @@ Install `gptdoc` as a dev dependency
 npm i --save-dev gptdoc 
 ```
 
-Execute 
+Execute
 
 ```sh
 node node_modules/gptdoc [args]
 ```
-
-<br/>
 
 ## Config
 
@@ -97,9 +92,7 @@ If none provided, the script will look for `.gptdoc`
 }
 ```
 
-Find more info about the config [here](./CONFIG.md)
-
-<br/>
+Find more info about the config [here](./CONFIG.md)\
 
 ## API Key
 
@@ -109,13 +102,7 @@ or set the `OPENAI_API_KEY` as a system environement variable.
 
 find your API key [here](https://platform.openai.com/account/api-keys)
 
-<br/><br/>
-
-
-
-
 ### Document this project!
-
 
 Running `docself` in the cloned repo will document source files in `./src/`
 
@@ -129,16 +116,9 @@ Running `test` in the cloned repo will document `./example/example.js`
 npm run test
 ```
 
-
-
-<br/><br/><br/><br/>
-
 ## Contributing
 
 Constructive criticism, Issues and PRs are more than welcome!
-
-
-<br/><br/>
 
 ---
 
