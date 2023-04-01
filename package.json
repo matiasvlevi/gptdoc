@@ -1,6 +1,6 @@
 {
   "name": "gptdoc",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "author": "Matias Vazquez-Levi",
   "description": "Generate documentation comments with the help of OpenAI's models",
@@ -36,10 +36,10 @@
     "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
   },
   "devDependencies": {
-    "typescript": "^4.9.5",
     "@types/node": "^18.14.3",
     "openai": "^3.2.1",
     "typedoc": "^0.23.26",
-    "typedoc-theme-hierarchy": "^3.0.2"
+    "typedoc-theme-hierarchy": "^3.0.2",
+    "typescript": "^4.9.5"
   }
 }
