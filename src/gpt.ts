@@ -54,54 +54,27 @@ export const GPT_CHAT_COMPLETION_CONFIG = (config:Config, prompt:string): Create
 });
 
 /**
- * Create & Send a chat completion request to an OpenAI model
- * 
- * @param _config The project's configuration 
- * @param prompt The prompt to send to the OpenAI model 
- * @returns 
- */
-export async function OpenAIChatCompletion(_config: Config, prompt: string ) {
-    const apiKey: string = _config.apiKey || '';
-
-    let config = {..._config};
-    delete config.apiKey;
-
-    const completionRequest: CreateChatCompletionRequest = 
-        GPT_CHAT_COMPLETION_CONFIG(config, prompt);
-    
-    
-    const res = await fetch(
-        `https://api.openai.com/v1/chat/completions`, {
-        headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify(completionRequest)
-    });
-
-    return await res.json();
-}
-
-/**
  * Create & Send a request to an OpenAI model
  * 
  * @param _config The project's configuration 
  * @param prompt The prompt to send to the OpenAI model 
  * @returns 
  */
-export async function OpenAICompletion(_config: Config, prompt: string ) {
+export async function OpenAICompletion(_config: Config, prompt: string) {
     const apiKey: string = _config.apiKey || '';
 
     let config = {..._config};
     delete config.apiKey;
 
-    const completionRequest: CreateCompletionRequest = 
+    const completionRequest: CreateCompletionRequest|CreateChatCompletionRequest = 
+        _config.chat ? 
+        GPT_CHAT_COMPLETION_CONFIG(config, prompt):
         GPT_COMPLETION_CONFIG(config, prompt);
+
     
     
     const res = await fetch(
-        `https://api.openai.com/v1/completions`, {
+        `https://api.openai.com/v1/${_config.chat ? 'chat/completions' : 'completions'}`, {
         headers: {
             'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
@@ -180,3 +153,11 @@ export const Models: { [key:string]: ModelMeta } = {
         isChatModel: true
     }
 }
+
+
+if (Number(process.version.split('.')[0]) < 18) {
+    // global.fetch = function fetch() {
+
+    // } 
+}
+

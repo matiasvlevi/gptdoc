@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path"
 
 import { File } from './File'
-import { makeConfig, Config } from "../config/index";
+import { Config } from "../config/index";
 
 import * as Logger from "../utils/Logger";
 import { Models, PriceRange } from "../gpt";
@@ -52,6 +52,7 @@ export class Project {
             process.exit();
         }
 
+
         // If src is a file
         if (!fs.statSync(this.config.files.src).isDirectory()) {
             this.files = [this.config.files.src];
@@ -66,12 +67,17 @@ export class Project {
         }
 
         // If src is directory
-        this.files = 
+        if (Project.checkFsValidity(this.config)) {
+            Logger.error("Destination must not be contained in the source path");
+            process.exit();
+        }
+        
+        this.files =  
             Project.getSourceFilePaths(
                 this.config.files.src,
                 this.config.files.recursive
             );
-        
+
         // Make destination directory is does not exist
         if (!fs.existsSync(this.config.files.dest)) {
             fs.mkdirSync(this.config.files.dest);
@@ -79,12 +85,16 @@ export class Project {
 
     }
 
-    static readConfigFile(config_path: string): Config {
-        if (!fs.existsSync(config_path)) return makeConfig({});
+    /** @gpt */
+    static checkFsValidity(config: Config) {
+        const files = fs.readdirSync(config.files.src);
 
-        return makeConfig(
-            JSON.parse(fs.readFileSync(config_path, 'utf-8'))
-        );
+        for (let i = 0; i < files.length; i++) {
+            if (files[i] === config.files.dest) 
+                return true;
+        }
+        
+        return false;
     }
 
     static getSourceFilePaths(src_path: string, recursive: boolean = true): string[] {
