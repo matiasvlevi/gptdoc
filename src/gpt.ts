@@ -153,11 +153,3 @@ export const Models: { [key:string]: ModelMeta } = {
         isChatModel: true
     }
 }
-
-
-if (Number(process.version.split('.')[0]) < 18) {
-    // global.fetch = function fetch() {
-
-    // } 
-}
-
