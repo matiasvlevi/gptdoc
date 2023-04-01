@@ -7,7 +7,6 @@ import {
 import {
     GPT_DEBUG_COMMENT,
     GPT_PROMPT,
-    OpenAIChatCompletion,
     OpenAICompletion
 } from '../gpt'
 
@@ -145,11 +144,7 @@ export class GPTDocument {
                 return source;
             }
 
-            let res;
-            if (project.config.chat)
-                res = await OpenAIChatCompletion(project.config, prompt);
-            else
-                res = await OpenAICompletion(project.config, prompt);
+            let res = await OpenAICompletion(project.config, prompt);
 
             if (res.error) {
                 Logger.error(res.error.message, true);
