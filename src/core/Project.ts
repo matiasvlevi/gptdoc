@@ -52,10 +52,6 @@ export class Project {
             process.exit();
         }
 
-        if (Project.checkFsValidity(this.config)) {
-            Logger.error("Destination must not be contained in the source path");
-            process.exit();
-        }
 
         // If src is a file
         if (!fs.statSync(this.config.files.src).isDirectory()) {
@@ -71,6 +67,11 @@ export class Project {
         }
 
         // If src is directory
+        if (Project.checkFsValidity(this.config)) {
+            Logger.error("Destination must not be contained in the source path");
+            process.exit();
+        }
+        
         this.files =  
             Project.getSourceFilePaths(
                 this.config.files.src,
