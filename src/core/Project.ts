@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path"
 
 import { File } from './File'
-import { makeConfig, Config } from "../config/index";
+import { Config } from "../config/index";
 
 import * as Logger from "../utils/Logger";
 import { Models, PriceRange } from "../gpt";
@@ -82,14 +82,6 @@ export class Project {
             fs.mkdirSync(this.config.files.dest);
         }
 
-    }
-
-    static readConfigFile(config_path: string): Config {
-        if (!fs.existsSync(config_path)) return makeConfig({});
-
-        return makeConfig(
-            JSON.parse(fs.readFileSync(config_path, 'utf-8'))
-        );
     }
 
     /** @gpt */
