@@ -27,7 +27,7 @@ export function makeConfig(
         language: _config.language || 'JS',
         prompt: _config.prompt || '',
         minify: _config.minify ?? true,
-        chat: Models[_config.openai.model].isChatModel ?? _config.chat ?? false,
+        chat: ((_config.openai.model in Models) ? Models[_config.openai.model].isChatModel : undefined) ?? _config.chat ?? false,
         openai: {
             temperature: _config.openai.temperature || 0.75,
             top_p: _config.openai.top_p || 1,
