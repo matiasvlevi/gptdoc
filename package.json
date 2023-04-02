@@ -45,5 +45,5 @@
     "docself": "node ./ -c .gptdoc ./src/ ./gpt",
     "doc": "node node_modules/typedoc/bin/typedoc ./src --out ./docs/typedoc --entryPoints ./src/index.ts --theme hierarchy ",
     "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
-  },
+  }
 }
