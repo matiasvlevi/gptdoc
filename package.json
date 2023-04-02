@@ -16,7 +16,6 @@
     "gpt-3.5",
     "gpt-4"
   ],
-  "main": "./gptdoc.js",
   "homepage": "https://github.com/matiasvlevi/gptdoc#readme",
   "repository": {
     "type": "git",
@@ -26,14 +25,13 @@
     "url": "https://github.com/matiasvlevi/gptdoc/issues",
     "email": "matiasvlevi@gmail.com"
   },
+  "main": "./gptdoc.js",
   "bin": {
     "gptdoc": "./gptdoc.js"
   },
-  "scripts": {
-    "build": "node node_modules/typescript/bin/tsc -p ./src",
-    "docself": "node ./ -c .gptdoc ./src/ ./gpt",
-    "doc": "node node_modules/typedoc/bin/typedoc ./src --out ./docs/typedoc --entryPoints ./src/index.ts --theme hierarchy ",
-    "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
+  "engineStrict": true,
+  "engines": {
+    "node": "^18.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.14.3",
@@ -41,5 +39,11 @@
     "typedoc": "^0.23.26",
     "typedoc-theme-hierarchy": "^3.0.2",
     "typescript": "^4.9.5"
-  }
+  },
+  "scripts": {
+    "build": "node node_modules/typescript/bin/tsc -p ./src",
+    "docself": "node ./ -c .gptdoc ./src/ ./gpt",
+    "doc": "node node_modules/typedoc/bin/typedoc ./src --out ./docs/typedoc --entryPoints ./src/index.ts --theme hierarchy ",
+    "test": "node ./gptdoc.js ./example/example.js ./example/gpt.example.js"
+  },
 }
