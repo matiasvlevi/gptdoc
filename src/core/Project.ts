@@ -56,7 +56,6 @@ export class Project {
             process.exit();
         }
 
-
         // If src is a file
         if (!fs.statSync(this.config.files.src).isDirectory()) {
             this.files = [this.config.files.src];

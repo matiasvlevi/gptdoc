@@ -136,7 +136,11 @@ export class GPTDocument {
         } else {
 
             // Generate a prompt
-            prompt = GPT_PROMPT(project.config, this.meta.kind, this.source);
+            prompt = GPT_PROMPT(
+                project.config,
+                this.meta.kind,
+                this.source, source
+            );
             prompt_tokens = GPTDocument.estimateTokenCount(prompt);
 
             // Length guard, 

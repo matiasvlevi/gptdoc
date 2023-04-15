@@ -3,6 +3,11 @@ import { CLIArgs } from "../cli";
 import { parseEnv } from './parseEnv';
 import { Models } from '../models';
 
+function _enum(fields: string[], context: string) {
+    if (fields.includes(context)) return context;
+    else return fields[0];
+}
+
 /** 
  * Merge a configuration with the defaults
  * 
@@ -32,7 +37,8 @@ export function makeConfig(
             temperature: _config.openai.temperature || 0.75,
             top_p: _config.openai.top_p || 1,
             max_tokens: _config.openai.max_tokens || 300,
-            model: _config.openai.model || 'text-davinci-003'
+            model: _config.openai.model || 'text-davinci-003',
+            context: _enum(['component', 'file', 'project'], _config.openai.context)
         },
         files: {
             src: cli_arg.src || _config.files.src || './src',

@@ -26,6 +26,15 @@ export interface IModelConfig {
      * Use text-davinci-003 if you don't know which model to use. 
      */
     model: string;
+
+    /**
+     * The context scope for the model.
+     * The amount of context the model recieves
+     * 
+     * - Component (default)
+     * - File      (costly)
+     */
+    context: string;
 }
 
 /** 
