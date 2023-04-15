@@ -71,8 +71,6 @@ export async function OpenAICompletion(_config: Config, prompt: string) {
         GPT_CHAT_COMPLETION_CONFIG(config, prompt):
         GPT_COMPLETION_CONFIG(config, prompt);
 
-    
-    
     const res = await fetch(
         `https://api.openai.com/v1/${_config.chat ? 'chat/completions' : 'completions'}`, {
         headers: {

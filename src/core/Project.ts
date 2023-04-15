@@ -132,7 +132,6 @@ export class Project {
         this.prompt_tokens += value;
     }
 
-
     addResponseTokens(value: number) {
         this.response_tokens += value;
     }
