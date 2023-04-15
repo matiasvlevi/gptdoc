@@ -140,11 +140,8 @@ export class Project {
     getTokenCost(): number | PriceRange {
         let price: number | PriceRange = 0.02;
 
-        for (let model in Models) {
-            if (this.config.openai.model.includes(model)) {
-                price = Models[model].price;
-                break;
-            }
+        if (this.config.openai.model in Models) {
+            price = Models[this.config.openai.model].price;
         }
 
         return price; 
