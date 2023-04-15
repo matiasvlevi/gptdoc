@@ -1,4 +1,4 @@
-import { PriceRange } from "../gpt";
+import { PriceRange } from "../models";
 
 /** @gpt */
 export function error(text: string, exit: boolean = false) {

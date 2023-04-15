@@ -5,7 +5,11 @@ import { File } from './File'
 import { Config } from "../config/index";
 
 import * as Logger from "../utils/Logger";
-import { Models, PriceRange } from "../gpt";
+
+import {
+    Models,
+    PriceRange
+} from '../models'
 
 /** @gpt */
 export class Project {
@@ -132,7 +136,6 @@ export class Project {
         this.prompt_tokens += value;
     }
 
-
     addResponseTokens(value: number) {
         this.response_tokens += value;
     }
@@ -140,11 +143,8 @@ export class Project {
     getTokenCost(): number | PriceRange {
         let price: number | PriceRange = 0.02;
 
-        for (let model in Models) {
-            if (this.config.openai.model.includes(model)) {
-                price = Models[model].price;
-                break;
-            }
+        if (this.config.openai.model in Models) {
+            price = Models[this.config.openai.model].price;
         }
 
         return price; 

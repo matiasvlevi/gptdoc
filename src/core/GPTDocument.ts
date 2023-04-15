@@ -5,6 +5,10 @@ import {
 } from './regex';
 
 import {
+    Models
+} from '../models'
+
+import {
     GPT_DEBUG_COMMENT,
     GPT_PROMPT,
     OpenAICompletion
@@ -134,12 +138,13 @@ export class GPTDocument {
             // Generate a prompt
             prompt = GPT_PROMPT(project.config, this.meta.kind, this.source);
             prompt_tokens = GPTDocument.estimateTokenCount(prompt);
-            
+
             // Length guard, 
             // do not send a request to OpenAI if prompt is too lengthy
-            if (prompt_tokens >= 4000) {
+            const { maxTokens } = Models[project.config.openai.model];
+            if (prompt_tokens >= maxTokens) {
                 Logger.error(
-                    `Your prompt has ${prompt_tokens} tokens, maximum is 4000`, true
+                    `Your prompt has ${prompt_tokens} tokens, maximum is ${maxTokens}`, true
                 );
                 return source;
             }

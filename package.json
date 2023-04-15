@@ -1,6 +1,6 @@
 {
   "name": "gptdoc",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "MIT",
   "author": "Matias Vazquez-Levi",
   "description": "Generate documentation comments with the help of OpenAI's models",
