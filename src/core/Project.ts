@@ -5,7 +5,11 @@ import { File } from './File'
 import { Config } from "../config/index";
 
 import * as Logger from "../utils/Logger";
-import { Models, PriceRange } from "../gpt";
+
+import {
+    Models,
+    PriceRange
+} from '../models'
 
 /** @gpt */
 export class Project {

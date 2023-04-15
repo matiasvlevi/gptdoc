@@ -5,9 +5,12 @@ import {
 } from './regex';
 
 import {
+    Models
+} from '../models'
+
+import {
     GPT_DEBUG_COMMENT,
     GPT_PROMPT,
-    Models,
     OpenAICompletion
 } from '../gpt'
 

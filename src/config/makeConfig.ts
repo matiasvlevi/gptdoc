@@ -1,7 +1,7 @@
 import { Config } from './types'
 import { CLIArgs } from "../cli";
 import { parseEnv } from './parseEnv';
-import { Models } from '../gpt';
+import { Models } from '../models';
 
 /** 
  * Merge a configuration with the defaults
